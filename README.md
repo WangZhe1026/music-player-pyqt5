@@ -15,3 +15,7 @@ You can select a local folder and play the songs you like from it.
 
 - **Feature**: add gitignore
 - **Feature**: add volume control
+
+### v1.1.1 (2025-05-03)
+
+- **Fix**: fix some bugs
