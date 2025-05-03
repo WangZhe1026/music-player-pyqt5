@@ -51,9 +51,9 @@ class PlayerWidget(QWidget):
         self.stop_button = QPushButton()  
         self.stop_button.setIcon(self.style().standardIcon(QStyle.SP_MediaStop))  
         
-        # 播放模式按钮
+        # 播放模式按钮 - 初始为顺序播放
         self.mode_button = QPushButton()
-        self.mode_button.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
+        self.mode_button.setIcon(self.style().standardIcon(QStyle.SP_ArrowForward))
         self.mode_button.setToolTip("播放模式: 顺序播放")
         
         # 创建选择文件夹按钮  

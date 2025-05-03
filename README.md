@@ -18,8 +18,12 @@ You can select a local folder and play the songs you like from it.
 
 ### v1.1.1 (2025-05-03)
 
-- **Fix**: fix some bugs
+- **Fix**: Fix some bugs
 
 ### v1.2.0 (2025-05-03)
 
 - **Feature**: Added multiple playback modes: random, in order, and loop
+
+### v1.2.1 (2025-05-03)
+
+- **Fix**: Fix a bug: initialized play mode icon and actual play mode don't match.
