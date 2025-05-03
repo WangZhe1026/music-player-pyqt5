@@ -5,6 +5,7 @@ class MediaPlayer(QObject):
     position_changed = pyqtSignal(int)  
     duration_changed = pyqtSignal(int)  
     state_changed = pyqtSignal(int)  
+    volume_changed = pyqtSignal(int)  # 新增音量变化信号  
     
     # 状态常量  
     PLAYING_STATE = QMediaPlayer.PlayingState  
@@ -16,6 +17,7 @@ class MediaPlayer(QObject):
         self.player = QMediaPlayer()  
         self.duration = 0  
         self.connect_signals()  
+        self.player.setVolume(50)  # 设置默认音量为50%  
     
     def connect_signals(self):  
         self.player.positionChanged.connect(self.on_position_changed)  
@@ -52,3 +54,20 @@ class MediaPlayer(QObject):
     
     def on_state_changed(self, state):  
         self.state_changed.emit(state)  
+
+     # 添加音量控制方法  
+    def set_volume(self, volume):  
+        self.player.setVolume(volume)  
+        self.volume_changed.emit(volume)  
+    
+    def get_volume(self):  
+        return self.player.volume()  
+    
+    def toggle_mute(self):  
+        self.player.setMuted(not self.player.isMuted())  
+        # 发送当前音量信号 (如果静音则为0)  
+        volume = 0 if self.player.isMuted() else self.player.volume()  
+        self.volume_changed.emit(volume)  
+    
+    def is_muted(self):  
+        return self.player.isMuted()  

@@ -7,6 +7,11 @@ You can select a local folder and play the songs you like from it.
 
 ### v1.0.0 (2025-05-03)
 
-- **Feature**: 初始版本发布
-- **Feature**: 支持本地文件夹音乐播放
-- **Feature**: 基本播放控制（播放、暂停、下一曲、上一曲）
+- **Feature**: init version
+- **Feature**: support local play
+- **Feature**: basic control（play,stop,choose folder）
+
+### v1.1.0 (2025-05-03)
+
+- **Feature**: add gitignore
+- **Feature**: add volume control

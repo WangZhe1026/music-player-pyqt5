@@ -51,6 +51,29 @@ class PlayerWidget(QWidget):
         self.layout.addWidget(self.time_label)  
         self.layout.addWidget(self.progress_slider)  
         self.layout.addLayout(self.controls_layout)  
+         # 创建音量控制布局  
+        self.volume_layout = QHBoxLayout()  
+        
+        # 创建音量图标按钮  
+        self.mute_button = QPushButton()  
+        self.mute_button.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))  
+        self.mute_button.setToolTip("静音")  
+        self.mute_button.setFixedSize(32, 32)  
+        
+        # 创建音量滑块  
+        self.volume_slider = QSlider(Qt.Horizontal)  
+        self.volume_slider.setRange(0, 100)  
+        self.volume_slider.setValue(50)  # 默认音量  
+        self.volume_slider.setToolTip("音量")  
+        self.volume_slider.setFixedWidth(100)  
+        
+        # 将音量控件添加到布局  
+        self.volume_layout.addWidget(self.mute_button)  
+        self.volume_layout.addWidget(self.volume_slider)  
+        
+        # 将音量控制布局添加到控制按钮布局中  
+        self.controls_layout.addStretch(1)  # 添加弹性空间，让音量控制靠右  
+        self.controls_layout.addLayout(self.volume_layout)  
     
     def connect_signals(self):  
         # 连接UI事件  
@@ -63,6 +86,27 @@ class PlayerWidget(QWidget):
         self.media_player.duration_changed.connect(self.update_duration)  
         self.media_player.state_changed.connect(self.update_player_state)  
     
+            # 连接音量控制信号  
+        self.volume_slider.valueChanged.connect(self.media_player.set_volume)  
+        self.mute_button.clicked.connect(self.toggle_mute)  
+        self.media_player.volume_changed.connect(self.update_volume_ui)  
+
+    # 添加音量控制相关方法  
+    def toggle_mute(self):  
+        self.media_player.toggle_mute() 
+        
+    @pyqtSlot(int)  
+    def update_volume_ui(self, volume):  
+        # 更新滑块位置  
+        if not self.volume_slider.isSliderDown():  # 防止滑块正在拖动时被更新  
+            self.volume_slider.setValue(volume)  
+        
+        # 更新静音按钮图标  
+        if volume == 0 or self.media_player.is_muted():  
+            self.mute_button.setIcon(self.style().standardIcon(QStyle.SP_MediaVolumeMuted))  
+        else:  
+            self.mute_button.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))  
+            
     def play_file(self, file_path):  
         self.media_player.load_file(file_path)  
         self.current_file_label.setText(os.path.basename(file_path))  
